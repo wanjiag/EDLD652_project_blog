@@ -17,7 +17,7 @@ library(tidyverse)
 ```
 
 
-Look at this!
+Look at this figure!
 
 ```{r message = FALSE}
 ggplot(mtcars, aes(disp, mpg)) +
