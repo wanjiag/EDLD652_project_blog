@@ -1,0 +1,36 @@
+[
+  {
+    "path": "posts/2021-03-05-first-testing-post/",
+    "title": "First testing post",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Wanjia Guo",
+        "url": "https://wanjiag.github.io/"
+      }
+    ],
+    "date": "2021-03-05",
+    "categories": [],
+    "contents": "\nLook at this!\n\n\nggplot(mtcars, aes(disp, mpg)) +\n  geom_point() +\n  geom_smooth() \n\n\n\n\n\n\n\n",
+    "preview": "posts/2021-03-05-first-testing-post/first-testing-post_files/figure-html5/unnamed-chunk-1-1.png",
+    "last_modified": "2021-03-05T15:27:40-08:00",
+    "input_file": {}
+  },
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to Visualizing Spotify",
+    "description": "Welcome to our new blog, Visualizing Spotify. We hope you enjoy \nreading what we have to say!",
+    "author": [
+      {
+        "name": "Wanjia Guo",
+        "url": "https://wanjiag.github.io/"
+      }
+    ],
+    "date": "2021-03-05",
+    "categories": [],
+    "contents": "\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-03-05T15:22:51-08:00",
+    "input_file": {}
+  }
+]

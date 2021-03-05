@@ -1,0 +1,28 @@
+---
+title: "First testing post"
+description: |
+  A short description of the post.
+author:
+  - name: Wanjia Guo
+    url: https://wanjiag.github.io/
+date: 03-05-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+
+Look at this!
+
+```{r message = FALSE}
+ggplot(mtcars, aes(disp, mpg)) +
+  geom_point() +
+  geom_smooth() 
+```
+
+
