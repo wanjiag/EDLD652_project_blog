@@ -1555,7 +1555,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h1 id="final-visualization">Final Visualization:</h1>
 <div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig2_data3</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>year</span>, y<span class='op'>=</span><span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig2_data3</span> <span class='op'>%&gt;%</span> 
+         <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>property</span><span class='op'>!=</span><span class='st'>"popularity"</span><span class='op'>)</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>year</span>, y<span class='op'>=</span><span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
   <span class='fu'>geom_line</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_line</span><span class='op'>(</span>data<span class='op'>=</span><span class='va'>fig2_data3</span> <span class='op'>%&gt;%</span> 
               <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>property</span><span class='op'>==</span><span class='st'>"popularity"</span><span class='op'>)</span>, 
@@ -1567,16 +1569,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='fu'>theme</span><span class='op'>(</span>plot.title <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span>,
         legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Music is 
-  &lt;span style = 'color: #029E73'&gt;louder&lt;/span&gt; 
-  &lt;span style = 'color: #F0E442'&gt;higher tempo&lt;/span&gt; 
-  &lt;span style = 'color: #57B4E9'&gt;more energetic&lt;/span&gt;,\n
+  &lt;span style = 'color: #57B4E9'&gt;louder&lt;/span&gt; 
+  &lt;span style = 'color: #029E73'&gt;higher tempo&lt;/span&gt; 
+  &lt;span style = 'color: #E69F00'&gt;more energetic&lt;/span&gt;,\n
   but NOT
   &lt;span style = 'color: #FF2500'&gt;**more popular**&lt;/span&gt;"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="how-does-music-change-over-time_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<p>legend.position = “none” # Attempt 1:</p>
+<h1 id="attempt-1">Attempt 1:</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig2_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>decades</span>, y<span class='op'>=</span><span class='va'>property</span>, fill<span class='op'>=</span><span class='va'>mean</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>geom_tile</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
@@ -1600,7 +1602,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="how-does-music-change-over-time_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
-<p>I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also take a look at a lot more properties just to see what properties changes more or are more interesting. I end up thinking I should try to take in the characteristics that are interesting and make sense. E.g. there are 3 increase (energy, loudness, tempo), but they are kind of inter-related. There are also 3 decrease (acousticness, instrumentalness, speechiness) that might be inter-related. Otherwise, popularity and duration could be interesting as well.</p>
+<p>I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also take a look at a lot more properties just to see what properties changes more or are more interesting. I end up thinking I should try to take in the characteristics that are interesting and tell a story. E.g. I found 3 increasing (energy, loudness, tempo) properties as well as 3 decreasing (acousticness, instrumentalness, speechiness) pnes. Popularity and duration are something that people are generally interested in as well.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

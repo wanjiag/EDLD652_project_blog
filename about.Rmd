@@ -10,8 +10,10 @@ knitr::opts_chunk$set(echo = FALSE)
 
 This is Wanjia's final project for **EDLD652: Data Visualization**.
 
-If you want to know more about Wanjia, [click here](https://wanjiag.github.io/).
+If you want to see the **original dataset** from Kaggle, [click here](https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks).
 
-If you want to know more about the course, [click here](https://dataviz-2021.netlify.app/). 
+If you want to know more about **Wanjia**, [click here](https://wanjiag.github.io/).
 
-If you want to see Wanjia's other homework and assignments, [click here](https://github.com/wanjiag/EDLD652).
+If you want to know more about the **course**, [click here](https://dataviz-2021.netlify.app/). 
+
+If you want to see Wanjia's other **homework and assignments**, [click here](https://github.com/wanjiag/EDLD652).

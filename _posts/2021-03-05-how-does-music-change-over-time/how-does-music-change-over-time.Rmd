@@ -108,7 +108,9 @@ fig2_data3 = fig2_data2 %>%
 # Final Visualization:
 
 ```{r layout = "l-body-outset"}
-ggplot(fig2_data3, aes(x=year, y=value)) + 
+ggplot(fig2_data3 %>% 
+         filter(property!="popularity"),
+       aes(x=year, y=value)) + 
   geom_line(aes(color=property)) +
   geom_line(data=fig2_data3 %>% 
               filter(property=="popularity"), 
@@ -120,13 +122,13 @@ ggplot(fig2_data3, aes(x=year, y=value)) +
   theme(plot.title = ggtext::element_markdown(),
         legend.position = "none")+
   labs(title = "Music is 
-  <span style = 'color: #029E73'>louder</span> 
-  <span style = 'color: #F0E442'>higher tempo</span> 
-  <span style = 'color: #57B4E9'>more energetic</span>,\n
+  <span style = 'color: #57B4E9'>louder</span> 
+  <span style = 'color: #029E73'>higher tempo</span> 
+  <span style = 'color: #E69F00'>more energetic</span>,\n
   but NOT
   <span style = 'color: #FF2500'>**more popular**</span>")
 ```
-legend.position = "none"
+
 # Attempt 1:
 
 ```{r}
@@ -150,5 +152,5 @@ ggplot(fig2_data2, aes(x=year, y=value)) +
   theme(legend.position = "none")
 ```
 
-I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also take a look at a lot more properties just to see what properties changes more or are more interesting. I end up thinking I should try to take in the characteristics that are interesting and make sense. E.g. there are 3 increase (energy, loudness, tempo), but they are kind of inter-related. There are also 3 decrease (acousticness, instrumentalness, speechiness) that might be inter-related. Otherwise, popularity and duration could be interesting as well. 
+I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also take a look at a lot more properties just to see what properties changes more or are more interesting. I end up thinking I should try to take in the characteristics that are interesting and tell a story. E.g. I found 3 increasing (energy, loudness, tempo) properties as well as 3 decreasing (acousticness, instrumentalness, speechiness) pnes. Popularity and duration are something that people are generally interested in as well. 
 
