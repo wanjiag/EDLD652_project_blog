@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Visualizing Spotify</title>
+    <link>https://wanjiag.github.io/EDLD652_project_blog/</link>
+    <atom:link href="https://wanjiag.github.io/EDLD652_project_blog/index.xml" rel="self" type="application/rss+xml"/>
+    <description>Visualizing Spotify
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>What kinds of songs are popular?</title>
+      <dc:creator>Wanjia Guo</dc:creator>
+      <link>https://wanjiag.github.io/EDLD652_project_blog/posts/2021-03-05-what-kinds-of-songs-are-popular</link>
+      <description>Danceability, tempo, speechiness, and duration: what makes a song popular?</description>
+      <category>visualization</category>
+      <category>spotify</category>
+      <guid>https://wanjiag.github.io/EDLD652_project_blog/posts/2021-03-05-what-kinds-of-songs-are-popular</guid>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://wanjiag.github.io/EDLD652_project_blog/posts/2021-03-05-what-kinds-of-songs-are-popular/what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Welcome to Visualizing Spotify</title>
+      <dc:creator>Wanjia Guo</dc:creator>
+      <link>https://wanjiag.github.io/EDLD652_project_blog/posts/welcome</link>
+      <description>Welcome to our new blog, Visualizing Spotify. We hope you enjoy 
+reading what we have to say!</description>
+      <category>others</category>
+      <guid>https://wanjiag.github.io/EDLD652_project_blog/posts/welcome</guid>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>

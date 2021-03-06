@@ -1,0 +1,104 @@
+---
+title: "What kinds of songs are popular?"
+description: |
+  Danceability, tempo, speechiness, and duration: what makes a song popular?
+author:
+  - name: Wanjia Guo
+    url: https://wanjiag.github.io/
+date: 03-05-2021
+categories:
+  - visualization
+  - spotify
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+
+library(tidyverse)
+#remotes::install_github("wilkelab/cowplot")
+#install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+#remotes::install_github("clauswilke/colorblindr")
+library(colorblindr)
+library(gghighlight)
+
+theme_set(theme_minimal())
+
+files <- fs::dir_ls(here::here("data"))
+
+obs <- gsub(".+data/(.+)\\.csv", "\\1", files)
+purrr::map2(obs, files, ~{
+   assign(.x, read_csv(.y), envir = .GlobalEnv)
+})
+```
+
+# Data clearning:
+```{r}
+data1 = data %>% 
+  select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% 
+  mutate(duration = 
+           (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms))) %>% 
+  select(-duration_ms) %>% 
+  mutate(tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)))
+  
+
+fig1_data = data1 %>% select(-year) %>% 
+  mutate(danceability = cut(danceability, 100, labels=FALSE),
+         duration = cut(duration, 100, labels=FALSE),
+         tempo = cut(tempo, 100, labels=FALSE),
+         speechiness = cut(speechiness, 100, labels=FALSE)) %>% 
+  pivot_longer(cols = danceability:duration, 
+               names_to = "property") %>% 
+  group_by(property, value) %>% 
+  summarise(popularity_median = median(popularity)) %>% 
+  mutate(property = factor(property, levels=c("danceability",
+                                              "tempo",
+                                              "speechiness",
+                                              "duration"),
+                           labels = c("Danceability",
+                                              "Tempo",
+                                              "Speechiness",
+                                              "Duration")))
+  
+```
+
+# Visualization 1:
+```{r}
+ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
+  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.6) + 
+  labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-100)") + 
+  scale_fill_OkabeIto()
+```
+
+Overall, the overlapping part in the figure makes it really hard to distinguish among each property. I also feel it is hard to see the trend because of how noisy the data is. 
+  
+# Visualization 2:  
+```{r}
+ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
+  geom_smooth(aes(color=property, fill=property))+
+  labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-100)") + 
+  scale_fill_OkabeIto()+
+  scale_color_OkabeIto()+
+  facet_wrap(~property)+
+  gghighlight()+
+  theme(legend.position = "none")
+```
+
+Then I thought I didn't have to show the original data. The second figure focuses on the trend, or the best fit curve based on each property. However, I still feel showing how noisy the original data is will be meaningful. 
+
+# Visualization 3:
+```{r}
+ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
+  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.8) + 
+  geom_smooth(aes(color=property))+
+  labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-100)") + 
+  scale_fill_OkabeIto()+
+  scale_color_OkabeIto(darken=-0.7)+
+  facet_wrap(~property)+
+  theme(legend.position = "none") +
+  labs(title = "Relationship between different song properties and popularity")
+```
+
+I think overall I like this version because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a "sweet spot" for a song to be popular. 

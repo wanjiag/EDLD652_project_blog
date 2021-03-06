@@ -7,6 +7,8 @@ author:
   - name: Wanjia Guo
     url: https://wanjiag.github.io/
 date: 03-05-2021
+categories:
+  - others
 output:
   distill::distill_article:
     self_contained: false

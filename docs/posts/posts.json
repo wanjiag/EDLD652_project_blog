@@ -1,8 +1,8 @@
 [
   {
-    "path": "posts/2021-03-05-first-testing-post/",
-    "title": "First testing post",
-    "description": "A short description of the post.",
+    "path": "posts/2021-03-05-what-kinds-of-songs-are-popular/",
+    "title": "What kinds of songs are popular?",
+    "description": "Danceability, tempo, speechiness, and duration: what makes a song popular?",
     "author": [
       {
         "name": "Wanjia Guo",
@@ -10,11 +10,16 @@
       }
     ],
     "date": "2021-03-05",
-    "categories": [],
-    "contents": "\nLook at this!\n\n\nggplot(mtcars, aes(disp, mpg)) +\n  geom_point() +\n  geom_smooth() \n\n\n\n\n\n\n\n",
-    "preview": "posts/2021-03-05-first-testing-post/first-testing-post_files/figure-html5/unnamed-chunk-1-1.png",
-    "last_modified": "2021-03-05T15:27:40-08:00",
-    "input_file": {}
+    "categories": [
+      "visualization",
+      "spotify"
+    ],
+    "contents": "\nData clearning:\n\n\ndata1 = data %>% \n  select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% \n  mutate(duration = \n           (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms))) %>% \n  select(-duration_ms) %>% \n  mutate(tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)))\n  \n\nfig1_data = data1 %>% select(-year) %>% \n  mutate(danceability = cut(danceability, 100, labels=FALSE),\n         duration = cut(duration, 100, labels=FALSE),\n         tempo = cut(tempo, 100, labels=FALSE),\n         speechiness = cut(speechiness, 100, labels=FALSE)) %>% \n  pivot_longer(cols = danceability:duration, \n               names_to = \"property\") %>% \n  group_by(property, value) %>% \n  summarise(popularity_median = median(popularity)) %>% \n  mutate(property = factor(property, levels=c(\"danceability\",\n                                              \"tempo\",\n                                              \"speechiness\",\n                                              \"duration\"),\n                           labels = c(\"Danceability\",\n                                              \"Tempo\",\n                                              \"Speechiness\",\n                                              \"Duration\")))\n\n\n\nVisualization 1:\n\n\nggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + \n  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.6) + \n  labs(x = \"Normalized Value (0-100)\", y = \"Median Popularity (0-100)\") + \n  scale_fill_OkabeIto()\n\n\n\n\nOverall, the overlapping part in the figure makes it really hard to distinguish among each property. I also feel it is hard to see the trend because of how noisy the data is.\nVisualization 2:\n\n\nggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + \n  geom_smooth(aes(color=property, fill=property))+\n  labs(x = \"Normalized Value (0-100)\", y = \"Median Popularity (0-100)\") + \n  scale_fill_OkabeIto()+\n  scale_color_OkabeIto()+\n  facet_wrap(~property)+\n  gghighlight()+\n  theme(legend.position = \"none\")\n\n\n\n\nThen I thought I didn’t have to show the original data. The second figure focuses on the trend, or the best fit curve based on each property. However, I still feel showing how noisy the original data is will be meaningful.\nVisualization 3:\n\n\nggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + \n  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.8) + \n  geom_smooth(aes(color=property))+\n  labs(x = \"Normalized Value (0-100)\", y = \"Median Popularity (0-100)\") + \n  scale_fill_OkabeIto()+\n  scale_color_OkabeIto(darken=-0.7)+\n  facet_wrap(~property)+\n  theme(legend.position = \"none\") +\n  labs(title = \"Relationship between different song properties and popularity\")\n\n\n\n\nI think overall I like this version because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a “sweet spot” for a song to be popular.\n\n\n\n",
+    "preview": "posts/2021-03-05-what-kinds-of-songs-are-popular/what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-2-1.png",
+    "last_modified": "2021-03-05T17:27:22-08:00",
+    "input_file": {},
+    "preview_width": 1248,
+    "preview_height": 768
   },
   {
     "path": "posts/welcome/",
@@ -27,10 +32,12 @@
       }
     ],
     "date": "2021-03-05",
-    "categories": [],
+    "categories": [
+      "others"
+    ],
     "contents": "\n\n\n\n",
     "preview": {},
-    "last_modified": "2021-03-05T15:22:51-08:00",
+    "last_modified": "2021-03-05T15:55:47-08:00",
     "input_file": {}
   }
 ]
