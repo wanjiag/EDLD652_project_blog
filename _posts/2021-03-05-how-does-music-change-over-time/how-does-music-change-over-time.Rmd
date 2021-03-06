@@ -1,0 +1,144 @@
+---
+title: "How does music change over time?"
+description: |
+  Visualize how danceability, tempo, speechiness, and duration change over time.
+author:
+  - name: Wanjia Guo
+    url: https://wanjiag.github.io/
+date: 03-05-2021
+draft: true
+categories:
+  - visualization
+  - spotify
+output:
+  distill::distill_article:
+    self_contained: false
+---
+```{r setup, include=FALSE}
+
+library(tidyverse)
+#remotes::install_github("wilkelab/cowplot")
+#install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+#remotes::install_github("clauswilke/colorblindr")
+library(colorblindr)
+library(gghighlight)
+
+theme_set(theme_minimal())
+
+files <- fs::dir_ls(here::here("data"))
+
+obs <- gsub(".+data/(.+)\\.csv", "\\1", files)
+purrr::map2(obs, files, ~{
+   assign(.x, read_csv(.y), envir = .GlobalEnv)
+})
+```
+
+# Final Visualization:
+
+# Attempt 1:
+
+**Data clearning:**
+
+```{r}
+
+data1 = data %>% 
+  select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% 
+  mutate(popularity = (popularity-min(popularity))/(max(popularity)-min(popularity)),
+         danceability = (danceability-min(danceability))/(max(danceability)-min(danceability)),
+         duration = 
+           (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms)),
+         tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)),
+         speechiness = (speechiness-min(speechiness))/(max(speechiness)-min(speechiness))) %>% 
+  select(-duration_ms)
+  
+
+fig1_data = data1 %>% select(-year) %>% 
+  mutate(danceability = cut(danceability, 100, labels=FALSE),
+         duration = cut(duration, 100, labels=FALSE),
+         tempo = cut(tempo, 100, labels=FALSE),
+         speechiness = cut(speechiness, 100, labels=FALSE)) %>% 
+  pivot_longer(cols = danceability:duration, 
+               names_to = "property") %>% 
+  group_by(property, value) %>% 
+  summarise(popularity_median = median(popularity)) %>% 
+  mutate(property = factor(property, levels=c("danceability",
+                                              "tempo",
+                                              "speechiness",
+                                              "duration"),
+                           labels = c("Danceability",
+                                              "Tempo",
+                                              "Speechiness",
+                                              "Duration")))
+
+fig2_data = data1 %>% 
+  mutate(decades = year - year %% 10 ) %>% 
+  select(-c(popularity, year)) %>% 
+  pivot_longer(cols = danceability:duration, 
+               names_to = "property") %>% 
+  group_by(property, decades) %>% 
+  summarise(mean = mean(value)) %>% 
+  mutate(property = factor(property, levels=c("duration",
+                                              "speechiness",
+                                              "tempo",
+                                              "danceability")))
+```
+
+**Figure:**
+
+```{r}
+
+ggplot(fig2_data, aes(x=decades, y=property, fill=mean)) + geom_tile() +
+  scale_fill_viridis_c(option = "A") + 
+  labs(y="Property", x="Decade") + 
+  theme(legend.position = "top")
+
+```
+
+This is not bad, but also not great. I think the suggestion that I received the most is to rank the property based on the color, so I did that. However, I still feel because I calculated the mean of song's property, though I normalized scores, the range of each property is still very different, which makes the change within some properties impossible to see.
+
+# Attempt 2 & 3:
+
+**Data clearning:**
+
+```{r}
+
+fig2_data2 = data_by_year %>% select(year, 
+                                     acousticness, 
+                                     danceability, 
+                                     popularity, 
+                                     speechiness, 
+                                     tempo,  
+                                     duration_ms) %>% 
+  filter(year < 2020) %>% 
+  mutate(acousticness = (acousticness-min(acousticness))/(max(acousticness)-min(acousticness)),
+         danceability = (danceability-min(danceability))/(max(danceability)-min(danceability)),
+         popularity = (popularity-min(popularity))/(max(popularity)-min(popularity)),
+         speechiness = (speechiness-min(speechiness))/(max(speechiness)-min(speechiness)),
+         tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)),
+         duration = (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms))) %>% 
+  select(-duration_ms) %>% 
+  pivot_longer(cols = acousticness:duration, 
+               names_to = "property") %>% 
+  mutate(decades = year - year %% 10 )
+
+fig2_data3 = fig2_data2 %>% 
+  group_by(property, decades) %>% 
+  summarise(mean = mean(value))
+```
+
+**Figures:**
+
+```{r}
+
+ggplot(fig2_data2, aes(x=year, y=value)) + 
+  geom_line(aes(color=property)) +
+  gghighlight(use_direct_label = FALSE)+
+  facet_wrap(~property)
+
+
+ggplot(fig2_data3, aes(x=decades, y=property)) + 
+  geom_tile(aes(fill=mean)) +
+  scale_fill_viridis_c(option = "A")
+```
+
+I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also picked a few more properties just to see that properties changes more or are more interesting. 

@@ -2465,10 +2465,13 @@ Project
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data1</span> <span class='op'>=</span> <span class='va'>data</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>select</span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>popularity</span>, <span class='va'>year</span>, <span class='va'>danceability</span>, <span class='va'>duration_ms</span>, <span class='va'>tempo</span>, <span class='va'>speechiness</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>duration <span class='op'>=</span> 
-           <span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>duration_ms</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>mutate</span><span class='op'>(</span>tempo <span class='op'>=</span> <span class='op'>(</span><span class='va'>tempo</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>mutate</span><span class='op'>(</span>popularity <span class='op'>=</span> <span class='op'>(</span><span class='va'>popularity</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>popularity</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>popularity</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>popularity</span><span class='op'>)</span><span class='op'>)</span>,
+         danceability <span class='op'>=</span> <span class='op'>(</span><span class='va'>danceability</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>danceability</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>danceability</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>danceability</span><span class='op'>)</span><span class='op'>)</span>,
+         duration <span class='op'>=</span> 
+           <span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>duration_ms</span><span class='op'>)</span><span class='op'>)</span>,
+         tempo <span class='op'>=</span> <span class='op'>(</span><span class='va'>tempo</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tempo</span><span class='op'>)</span><span class='op'>)</span>,
+         speechiness <span class='op'>=</span> <span class='op'>(</span><span class='va'>speechiness</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>speechiness</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>speechiness</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>speechiness</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>duration_ms</span><span class='op'>)</span>
   
 
 <span class='va'>fig1_data</span> <span class='op'>=</span> <span class='va'>data1</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='op'>-</span><span class='va'>year</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
@@ -2491,7 +2494,25 @@ Project
 </code></pre>
 </div>
 </div>
-<h1 id="visualization-1">Visualization 1:</h1>
+<h1 id="final-visualization">Final Visualization:</h1>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig1_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>value</span>, y<span class='op'>=</span><span class='va'>popularity_median</span>, group<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_ribbon</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='fl'>0</span>, ymax <span class='op'>=</span> <span class='va'>popularity_median</span>, fill<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color<span class='op'>=</span><span class='va'>property</span>, fill<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Normalized Value (0-100)"</span>, y <span class='op'>=</span> <span class='st'>"Median Popularity (0-100)"</span><span class='op'>)</span> <span class='op'>+</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_fill_OkabeIto</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_color_OkabeIto</a></span><span class='op'>(</span>darken<span class='op'>=</span><span class='op'>-</span><span class='fl'>0.7</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>property</span>, nrow<span class='op'>=</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>+</span>
+  <span class='fu'>ggdark</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ggdark/man/ggdarktheme.html'>dark_theme_gray</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Relationship between different song properties and popularity"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>I think I like this version the best because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a “sweet spot” for a song to be popular.</p>
+<h1 id="attempt-1">Attempt 1:</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig1_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>value</span>, y<span class='op'>=</span><span class='va'>popularity_median</span>, group<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2500,10 +2521,10 @@ Project
   <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_fill_OkabeIto</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
 <p>Overall, the overlapping part in the figure makes it really hard to distinguish among each property. I also feel it is hard to see the trend because of how noisy the data is.</p>
-<h1 id="visualization-2">Visualization 2:</h1>
+<h1 id="attempt-2">Attempt 2:</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig1_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>value</span>, y<span class='op'>=</span><span class='va'>popularity_median</span>, group<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2516,26 +2537,9 @@ Project
   <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
-</div>
-<p>Then I thought I didn’t have to show the original data. The second figure focuses on the trend, or the best fit curve based on each property. However, I still feel showing how noisy the original data is will be meaningful.</p>
-<h1 id="visualization-3">Visualization 3:</h1>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig1_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>value</span>, y<span class='op'>=</span><span class='va'>popularity_median</span>, group<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>geom_ribbon</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='fl'>0</span>, ymax <span class='op'>=</span> <span class='va'>popularity_median</span>, fill<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span>, alpha<span class='op'>=</span><span class='fl'>0.8</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'>geom_smooth</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
-  <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Normalized Value (0-100)"</span>, y <span class='op'>=</span> <span class='st'>"Median Popularity (0-100)"</span><span class='op'>)</span> <span class='op'>+</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_fill_OkabeIto</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_color_OkabeIto</a></span><span class='op'>(</span>darken<span class='op'>=</span><span class='op'>-</span><span class='fl'>0.7</span><span class='op'>)</span><span class='op'>+</span>
-  <span class='fu'>facet_wrap</span><span class='op'>(</span><span class='op'>~</span><span class='va'>property</span><span class='op'>)</span><span class='op'>+</span>
-  <span class='fu'>theme</span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Relationship between different song properties and popularity"</span><span class='op'>)</span>
-</code></pre>
-</div>
 <p><img src="what-kinds-of-songs-are-popular_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<p>I think overall I like this version because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a “sweet spot” for a song to be popular.</p>
+<p>I also thought maybe I didn’t have to show the original data to make the figure looks cleaner. This second figure focuses on the trend, or the best fit curve based on each property without showing the actual data. However, I still feel showing how noisy the original data is will be meaningful.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

@@ -38,10 +38,13 @@ purrr::map2(obs, files, ~{
 ```{r}
 data1 = data %>% 
   select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% 
-  mutate(duration = 
-           (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms))) %>% 
-  select(-duration_ms) %>% 
-  mutate(tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)))
+  mutate(popularity = (popularity-min(popularity))/(max(popularity)-min(popularity)),
+         danceability = (danceability-min(danceability))/(max(danceability)-min(danceability)),
+         duration = 
+           (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms)),
+         tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)),
+         speechiness = (speechiness-min(speechiness))/(max(speechiness)-min(speechiness))) %>% 
+  select(-duration_ms)
   
 
 fig1_data = data1 %>% select(-year) %>% 
@@ -64,7 +67,23 @@ fig1_data = data1 %>% select(-year) %>%
   
 ```
 
-# Visualization 1:
+# Final Visualization:
+```{r}
+ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
+  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.3) + 
+  geom_smooth(aes(color=property, fill=property))+
+  labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-100)") + 
+  scale_fill_OkabeIto()+
+  scale_color_OkabeIto(darken=-0.7)+
+  facet_wrap(~property, nrow=1)+
+  ggdark::dark_theme_gray() +
+  theme(legend.position = "none") +
+  labs(title = "Relationship between different song properties and popularity")
+```
+
+I think I like this version the best because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a "sweet spot" for a song to be popular. 
+
+# Attempt 1:
 ```{r}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.6) + 
@@ -73,8 +92,8 @@ ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) +
 ```
 
 Overall, the overlapping part in the figure makes it really hard to distinguish among each property. I also feel it is hard to see the trend because of how noisy the data is. 
-  
-# Visualization 2:  
+
+# Attempt 2:
 ```{r}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_smooth(aes(color=property, fill=property))+
@@ -86,19 +105,4 @@ ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) +
   theme(legend.position = "none")
 ```
 
-Then I thought I didn't have to show the original data. The second figure focuses on the trend, or the best fit curve based on each property. However, I still feel showing how noisy the original data is will be meaningful. 
-
-# Visualization 3:
-```{r}
-ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
-  geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.8) + 
-  geom_smooth(aes(color=property))+
-  labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-100)") + 
-  scale_fill_OkabeIto()+
-  scale_color_OkabeIto(darken=-0.7)+
-  facet_wrap(~property)+
-  theme(legend.position = "none") +
-  labs(title = "Relationship between different song properties and popularity")
-```
-
-I think overall I like this version because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a "sweet spot" for a song to be popular. 
+I also thought maybe I didn't have to show the original data to make the figure looks cleaner. This second figure focuses on the trend, or the best fit curve based on each property without showing the actual data. However, I still feel showing how noisy the original data is will be meaningful.
