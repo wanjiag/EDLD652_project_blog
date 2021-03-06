@@ -1514,7 +1514,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 </div>
 <h1 id="final-visualization">Final Visualization:</h1>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>fig1_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x<span class='op'>=</span><span class='va'>value</span>, y<span class='op'>=</span><span class='va'>popularity_median</span>, group<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
   <span class='fu'>geom_ribbon</span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='fl'>0</span>, ymax <span class='op'>=</span> <span class='va'>popularity_median</span>, fill<span class='op'>=</span><span class='va'>property</span><span class='op'>)</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span> 

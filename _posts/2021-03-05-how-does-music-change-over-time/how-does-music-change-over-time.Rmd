@@ -1,12 +1,11 @@
 ---
 title: "How does music change over time?"
 description: |
-  Visualize how danceability, tempo, speechiness, and duration change over time.
+  Visualize the differing trends in volume, tempo, energy, and popularity over time.
 author:
   - name: Wanjia Guo
     url: https://wanjiag.github.io/
 date: 03-05-2021
-draft: true
 categories:
   - visualization
   - spotify
@@ -22,6 +21,7 @@ library(tidyverse)
 #remotes::install_github("clauswilke/colorblindr")
 library(colorblindr)
 library(gghighlight)
+library(ggtext)
 
 theme_set(theme_minimal())
 
@@ -33,11 +33,7 @@ purrr::map2(obs, files, ~{
 })
 ```
 
-# Final Visualization:
-
-# Attempt 1:
-
-**Data clearning:**
+# Data Cleaning
 
 ```{r}
 
@@ -83,7 +79,55 @@ fig2_data = data1 %>%
                                               "danceability")))
 ```
 
-**Figure:**
+```{r}
+
+fig2_data2 = data_by_year %>% 
+  select(-c(key, mode)) %>% 
+  mutate(acousticness = (acousticness-min(acousticness))/(max(acousticness)-min(acousticness)),
+         danceability = (danceability-min(danceability))/(max(danceability)-min(danceability)),
+         duration = (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms)),
+         energy = (energy-min(energy))/(max(energy)-min(energy)),
+         instrumentalness =
+           (instrumentalness-min(instrumentalness))/(max(instrumentalness)-min(instrumentalness)),
+         liveness = (liveness-min(liveness))/(max(liveness)-min(liveness)),
+         loudness = (loudness-min(loudness))/(max(loudness)-min(loudness)),
+         speechiness = (speechiness-min(speechiness))/(max(speechiness)-min(speechiness)),
+         tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)),
+         valence = (valence-min(valence))/(max(valence)-min(valence)),
+         popularity = (popularity-min(popularity))/(max(popularity)-min(popularity))
+         ) %>% 
+  select(-duration_ms) %>% 
+  pivot_longer(cols = acousticness:duration, 
+               names_to = "property")
+
+fig2_data3 = fig2_data2 %>% 
+  filter(property %in% c('energy', 'loudness', 'tempo', 'popularity')) %>% 
+  mutate(property = factor(property, levels=c('popularity','energy', 'loudness', 'tempo')))
+```
+
+# Final Visualization:
+
+```{r layout = "l-body-outset"}
+ggplot(fig2_data3, aes(x=year, y=value)) + 
+  geom_line(aes(color=property)) +
+  geom_line(data=fig2_data3 %>% 
+              filter(property=="popularity"), 
+            aes(x=year, y=value), 
+            color="red",
+            size=1.3)+
+  gghighlight(use_direct_label = FALSE)+
+  scale_color_OkabeIto(darken=-0.5)+
+  theme(plot.title = ggtext::element_markdown(),
+        legend.position = "none")+
+  labs(title = "Music is 
+  <span style = 'color: #029E73'>louder</span> 
+  <span style = 'color: #F0E442'>higher tempo</span> 
+  <span style = 'color: #57B4E9'>more energetic</span>,\n
+  but NOT
+  <span style = 'color: #FF2500'>**more popular**</span>")
+```
+legend.position = "none"
+# Attempt 1:
 
 ```{r}
 
@@ -96,49 +140,15 @@ ggplot(fig2_data, aes(x=decades, y=property, fill=mean)) + geom_tile() +
 
 This is not bad, but also not great. I think the suggestion that I received the most is to rank the property based on the color, so I did that. However, I still feel because I calculated the mean of song's property, though I normalized scores, the range of each property is still very different, which makes the change within some properties impossible to see.
 
-# Attempt 2 & 3:
-
-**Data clearning:**
+# Attempt 2:
 
 ```{r}
-
-fig2_data2 = data_by_year %>% select(year, 
-                                     acousticness, 
-                                     danceability, 
-                                     popularity, 
-                                     speechiness, 
-                                     tempo,  
-                                     duration_ms) %>% 
-  filter(year < 2020) %>% 
-  mutate(acousticness = (acousticness-min(acousticness))/(max(acousticness)-min(acousticness)),
-         danceability = (danceability-min(danceability))/(max(danceability)-min(danceability)),
-         popularity = (popularity-min(popularity))/(max(popularity)-min(popularity)),
-         speechiness = (speechiness-min(speechiness))/(max(speechiness)-min(speechiness)),
-         tempo = (tempo-min(tempo))/(max(tempo)-min(tempo)),
-         duration = (duration_ms-min(duration_ms))/(max(duration_ms)-min(duration_ms))) %>% 
-  select(-duration_ms) %>% 
-  pivot_longer(cols = acousticness:duration, 
-               names_to = "property") %>% 
-  mutate(decades = year - year %% 10 )
-
-fig2_data3 = fig2_data2 %>% 
-  group_by(property, decades) %>% 
-  summarise(mean = mean(value))
-```
-
-**Figures:**
-
-```{r}
-
 ggplot(fig2_data2, aes(x=year, y=value)) + 
   geom_line(aes(color=property)) +
   gghighlight(use_direct_label = FALSE)+
-  facet_wrap(~property)
-
-
-ggplot(fig2_data3, aes(x=decades, y=property)) + 
-  geom_tile(aes(fill=mean)) +
-  scale_fill_viridis_c(option = "A")
+  facet_wrap(~property)+
+  theme(legend.position = "none")
 ```
 
-I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also picked a few more properties just to see that properties changes more or are more interesting. 
+I realized there is another dataset that is already ranked by year, so I thought I would try to clean that dataset and see if that works better. I also take a look at a lot more properties just to see what properties changes more or are more interesting. I end up thinking I should try to take in the characteristics that are interesting and make sense. E.g. there are 3 increase (energy, loudness, tempo), but they are kind of inter-related. There are also 3 decrease (acousticness, instrumentalness, speechiness) that might be inter-related. Otherwise, popularity and duration could be interesting as well. 
+

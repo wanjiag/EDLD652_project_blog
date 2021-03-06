@@ -68,7 +68,7 @@ fig1_data = data1 %>% select(-year) %>%
 ```
 
 # Final Visualization:
-```{r}
+```{r layout = "l-body-outset"}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.3) + 
   geom_smooth(aes(color=property, fill=property))+
