@@ -6,6 +6,11 @@ description: |
 output_dir: "docs"
 navbar:
   left:
+    - text: "About"
+      href: about.html
+    - icon: fa fa-github
+      href: https://github.com/wanjiag/EDLD652_project_blog
+  right:
     - text: "Labs"
       menu:
       - text: "First"
@@ -24,13 +29,6 @@ navbar:
       menu:
       - text: "Draft"
         href: https://wanjiag.github.io/EDLD652/project/project_draft.html
-  right:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
-    - icon: fa fa-github
-      href: https://github.com/wanjiag/EDLD652_project_blog
 output: 
     distill::distill_article:
       theme: mytheme.css
