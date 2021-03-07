@@ -1,0 +1,218 @@
+---
+title: "The most popular artists of all time."
+description: |
+  Looking at the most popular musical artists of all time based on their most popular song.
+author:
+  - name: Wanjia Guo
+    url: https://wanjiag.github.io/
+date: 03-06-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+library(tidyverse) 
+#remotes::install_github("wilkelab/cowplot")
+#install.packages("colorspace", repos = "http://R-Forge.R-project.org")
+#remotes::install_github("clauswilke/colorblindr")
+library(colorblindr)
+library(gganimate)
+
+theme_set(theme_void())
+
+files <- fs::dir_ls(here::here("data"))
+
+obs <- gsub(".+data/(.+)\\.csv", "\\1", files)
+purrr::map2(obs, files, ~{
+   assign(.x, read_csv(.y), envir = .GlobalEnv)
+})
+```
+
+
+# Data Cleaning
+```{r}
+artist_data = data %>% 
+  select(popularity, artists, year, name) %>% 
+  mutate(artists =  gsub("\\[|\\]", "", artists)) %>% 
+  separate_rows(artists, sep = ", ") %>% 
+  mutate(artists =  gsub("'", "", artists)) %>% 
+  mutate(artists =  gsub('"', '', artists))
+
+artist_data_decades = artist_data %>% 
+  mutate(year = year - year %% 10 )
+
+fig3_data = artist_data_decades  %>% 
+  group_by(year, artists) %>% 
+  summarise(mean_popularity = mean(popularity)) %>% 
+  arrange(year, desc(mean_popularity)) %>% 
+  mutate(rank = 1:n()) %>% 
+  filter(rank <= 10)
+
+
+if (exists('top10_df')){
+  remove("top10_df")
+}
+
+for (curr_year in sort(unique(artist_data_decades$year))){
+  curr_df = artist_data_decades %>% 
+    filter(year <= curr_year) %>% 
+    group_by(artists) %>% 
+    summarise(mean_popularity = max(popularity)) %>% 
+    arrange(desc(mean_popularity)) %>% 
+    mutate(rank = 1:n()) %>%
+    filter(rank <= 10)
+  
+  if (curr_year == 1920){
+    curr_df$old = TRUE
+  }else {
+    curr_df$old = curr_df$artists %in% pre_df$artists
+  }
+  
+  curr_df$year = curr_year
+
+  if (exists('top10_df')){
+    top10_df = rbind(top10_df, curr_df)
+  }else {
+    top10_df = curr_df
+  }
+  pre_df = curr_df
+}
+
+```
+
+# Final Visualization
+
+```{r}
+p3 = ggplot(top10_df) +  
+  aes(xmin = 0, 
+      xmax = mean_popularity,
+      ymin = rank - .45,
+      ymax = rank + .45,
+      y = rank,
+      group = artists,
+      fill = old) + 
+  geom_rect(alpha = .7) +
+  scale_x_continuous(  
+    limits = c(-50, 100),
+    breaks = c(0, 20, 40, 60, 80, 100)) + 
+  geom_text(hjust = "right",  
+            aes(label = artists,
+                color = old),  
+            x = -10) + 
+  scale_fill_manual(values=c("#CB7BA7","#1273B0"))+
+  scale_color_manual(values=c("#CB7BA7","#1273B0"))+
+  scale_y_reverse() +
+  labs(x = 'Popularity (0-100)', 
+       y = '',
+       title = "The most popular artists through the decades.",
+       subtitle = "<span style = 'color: #CB7BA7'>New comers</span>
+       and 
+       <span style = 'color: #1273B0'>Defending champions</span>",
+       caption = "Popularity is based on each artist's most popular song.") +
+  geom_text(x = 50 , y = -5,
+            aes(label = as.character(year)),
+            size = 40, col = "grey40", alpha=0.3) + 
+  theme(legend.position = "none",
+        plot.subtitle = ggtext::element_markdown(size=18),
+        plot.title = element_text(size=20),
+        plot.caption = element_text(size=12))
+
+animate(p3 + 
+          transition_states(year,
+                            transition_length = 2, 
+                            state_length = 4) + 
+          enter_fade() +
+          exit_fade(),
+        width = 650, 
+        height = 400,
+        nframes = 350, 
+        renderer = magick_renderer())
+```
+
+In general, I liked this version the best because 1) I finally figured out how to slow things down a bit; 2) adding colors makes it easier to detect changes from one decade to the next; 3) with new way of calculating running tops, the transitions are more meaningful and more interesting. 
+
+# Attempt 1
+```{r}
+p1 = ggplot(fig3_data) +  
+  aes(xmin = 18 ,  
+      xmax = mean_popularity) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ year) +  
+  geom_rect(alpha = .7) +
+  scale_x_continuous(  
+    limits = c(-50, 100),
+    breaks = c(0, 20, 40, 60, 80, 100)) + 
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = artists),  
+            x = 10) + 
+  scale_y_reverse() + 
+  labs(x = 'Popularity (0-100)', y = '')
+
+p2 = p1 +  
+  facet_null() + 
+  geom_text(x = 50 , y = -5,
+            family = "Times",
+            aes(label = as.character(year)),
+            size = 25, col = "grey18", alpha=0.5) + 
+  aes(group = artists)
+
+animate(p2 + transition_states(year,
+                               transition_length = 2,
+                               state_length = 5) + 
+          enter_fade() +
+          exit_fade(), 
+        nframes = 250,
+        renderer = magick_renderer())
+
+```
+
+This is an edited version from the draft. One of the major problem I found after I planned to make this figure but had trouble with is the fact that very little people stay within top10 from one year to the next. Therefore, the transition state doesn't look as nice as a continuous racing chart. The transition look far more sudden than I hoped. 
+
+I also had some trouble with flash green screens with gganimate(). Luckily I was able to find a solution online via using the magick_renderer() function.
+
+# Attempt 2
+
+```{r}
+p3 = ggplot(top10_df) +  
+  aes(xmin = 0, 
+      xmax = mean_popularity,
+      ymin = rank - .45,
+      ymax = rank + .45,
+      y = rank,
+      group = artists) + 
+  geom_rect(alpha = .7) +
+  scale_x_continuous(  
+    limits = c(-50, 100),
+    breaks = c(0, 20, 40, 60, 80, 100)) + 
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = artists),  
+            x = -10) + 
+  scale_y_reverse() +
+  labs(x = 'Popularity (0-100)', y = '') +
+  geom_text(x = 50 , y = -5,
+            aes(label = as.character(year)),
+            size = 35, col = "grey18", alpha=0.5)
+
+animate(p3 + 
+          transition_states(year,transition_length = 3, state_length = 4) + 
+          #ease_aes("sine-in-out") +
+          enter_fade() +
+          exit_fade(), 
+        nframes = 350,
+        renderer = magick_renderer())
+
+#anim_save("popular_artist.gif", animation = last_animation())
+
+```
+
+This figure is different from the previous in a few perspectives: 
+
+1) I realized that the ranking makes more sense to be based on max, which means that if an aritist has only one mega-hit, the artist deserves to be on the chart, even if the other songs s/he made is horrible.
+
+2) I also realized that the ranking should be based on running rank. In other words, if person A got 100 in 1990, and nobody else reach that score after 1990, it only makes sense to have this person still on top of the chart. However, I was calculating top people based on who is the top for each decades. That was a major mistake! I had to write a for-loop to calculate the running rank, but it's a pretty straight forward for-loop. 

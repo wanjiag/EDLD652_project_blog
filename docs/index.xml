@@ -7,7 +7,15 @@
     <description>Visualizing Spotify
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>The most popular artists of all time.</title>
+      <dc:creator>Wanjia Guo</dc:creator>
+      <link>https://wanjiag.github.io/EDLD652_project_blog/posts/2021-03-06-the-most-popular-artists-of-all-time</link>
+      <description>Looking at the most popular musical artists of all time based on their most popular song.</description>
+      <guid>https://wanjiag.github.io/EDLD652_project_blog/posts/2021-03-06-the-most-popular-artists-of-all-time</guid>
+      <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>How does music change over time?</title>
       <dc:creator>Wanjia Guo</dc:creator>

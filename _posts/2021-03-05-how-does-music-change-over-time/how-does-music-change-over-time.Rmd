@@ -129,6 +129,9 @@ ggplot(fig2_data3 %>%
   <span style = 'color: #FF2500'>**more popular**</span>")
 ```
 
+My personal favorite part of this figure is the fact that it tells a good story. There are a lot properties I could choose to plot, but it is only interesting when there are contrasts. It is interesting (to me personally) to realize that since 2000, despite the fact that the songs are loud, high tempo, and energtic, they are only dropping in popularity. 
+
+
 # Attempt 1:
 
 ```{r}
