@@ -6,14 +6,14 @@
       "description": "Some additional details about why this blog exists.",
       "author": [],
       "contents": "\nThis is Wanjia’s final project for EDLD652: Data Visualization.\nIf you want to see the original dataset from Kaggle, click here.\nIf you want to know more about Wanjia, click here.\nIf you want to know more about the course, click here.\nIf you want to see Wanjia’s other homework and assignments, click here.\n\n\n\n",
-      "last_modified": "2021-03-06T21:29:51-08:00"
+      "last_modified": "2021-03-06T22:45:35-08:00"
     },
     {
       "path": "index.html",
       "title": "Visualizing Spotify",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-06T21:29:52-08:00"
+      "last_modified": "2021-03-06T22:45:36-08:00"
     }
   ],
   "collections": ["posts/posts.json"]

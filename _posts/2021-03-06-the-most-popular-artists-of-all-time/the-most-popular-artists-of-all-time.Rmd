@@ -59,12 +59,16 @@ if (exists('top10_df')){
 }
 
 for (curr_year in sort(unique(artist_data_decades$year))){
+
   curr_df = artist_data_decades %>% 
     filter(year <= curr_year) %>% 
     group_by(artists) %>% 
-    summarise(mean_popularity = max(popularity)) %>% 
-    arrange(desc(mean_popularity)) %>% 
-    mutate(rank = 1:n()) %>%
+    filter(popularity == max(popularity)) %>% 
+    arrange(desc(popularity))
+  
+  curr_df$rank = 1:1:nrow(curr_df)
+  
+  curr_df = curr_df %>% 
     filter(rank <= 10)
   
   if (curr_year == 1920){
@@ -89,21 +93,28 @@ for (curr_year in sort(unique(artist_data_decades$year))){
 
 ```{r}
 p3 = ggplot(top10_df) +  
-  aes(xmin = 0, 
-      xmax = mean_popularity,
+  aes(xmin = -10, 
+      xmax = popularity,
       ymin = rank - .45,
       ymax = rank + .45,
       y = rank,
       group = artists,
       fill = old) + 
-  geom_rect(alpha = .7) +
+  geom_text(aes(label = as.character(year)),
+            x = 60 , y = -2, alpha=0.8,
+            size = 40, col = "grey40") +
+  geom_rect(alpha = .9) +
   scale_x_continuous(  
     limits = c(-50, 100),
     breaks = c(0, 20, 40, 60, 80, 100)) + 
   geom_text(hjust = "right",  
             aes(label = artists,
                 color = old),  
-            x = -10) + 
+            x = -12) + 
+  geom_text(aes(y = rank, label = name),
+            color = "white",
+            x = -8,
+            hjust = "left") + 
   scale_fill_manual(values=c("#CB7BA7","#1273B0"))+
   scale_color_manual(values=c("#CB7BA7","#1273B0"))+
   scale_y_reverse() +
@@ -114,9 +125,6 @@ p3 = ggplot(top10_df) +
        and 
        <span style = 'color: #1273B0'>Defending champions</span>",
        caption = "Popularity is based on each artist's most popular song.") +
-  geom_text(x = 50 , y = -5,
-            aes(label = as.character(year)),
-            size = 40, col = "grey40", alpha=0.3) + 
   theme(legend.position = "none",
         plot.subtitle = ggtext::element_markdown(size=18),
         plot.title = element_text(size=20),
@@ -128,13 +136,13 @@ animate(p3 +
                             state_length = 4) + 
           enter_fade() +
           exit_fade(),
-        width = 650, 
+        width = 675, 
         height = 400,
-        nframes = 350, 
+        nframes = 500, 
         renderer = magick_renderer())
 ```
 
-In general, I liked this version the best because 1) I finally figured out how to slow things down a bit; 2) adding colors makes it easier to detect changes from one decade to the next; 3) with new way of calculating running tops, the transitions are more meaningful and more interesting. 
+In general, I liked this version the best because 1) I finally figured out how to slow things down a bit; 2) adding colors makes it easier to detect changes from one decade to the next; 3) with new way of calculating running tops, the transitions are more meaningful and more interesting; 4) added the names of the popular songs for people who are interested,. Its easy to see that the only songs people still listening to from 1920s-1990s are almost exclusively christmas songs. 
 
 # Attempt 1
 ```{r}
@@ -183,7 +191,7 @@ I also had some trouble with flash green screens with gganimate(). Luckily I was
 ```{r}
 p3 = ggplot(top10_df) +  
   aes(xmin = 0, 
-      xmax = mean_popularity,
+      xmax = popularity,
       ymin = rank - .45,
       ymax = rank + .45,
       y = rank,
