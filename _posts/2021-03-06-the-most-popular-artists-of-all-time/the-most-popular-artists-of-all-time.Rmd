@@ -6,6 +6,9 @@ author:
   - name: Wanjia Guo
     url: https://wanjiag.github.io/
 date: 03-06-2021
+categories:
+  - visualization
+  - spotify
 output:
   distill::distill_article:
     self_contained: false
