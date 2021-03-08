@@ -11,6 +11,7 @@ categories:
   - spotify
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 ```{r setup, include=FALSE}
@@ -35,7 +36,7 @@ purrr::map2(obs, files, ~{
 
 # Data Cleaning
 
-```{r}
+```{r Data Cleaning 1}
 
 data1 = data %>% 
   select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% 
@@ -79,7 +80,7 @@ fig2_data = data1 %>%
                                               "danceability")))
 ```
 
-```{r}
+```{r Data Cleaning 2}
 
 fig2_data2 = data_by_year %>% 
   select(-c(key, mode)) %>% 
@@ -105,7 +106,7 @@ fig2_data3 = fig2_data2 %>%
   mutate(property = factor(property, levels=c('popularity','energy', 'loudness', 'tempo')))
 ```
 
-# Final Visualization:
+# Final Visualization
 
 ```{r layout = "l-body-outset"}
 ggplot(fig2_data3 %>% 
@@ -132,7 +133,7 @@ ggplot(fig2_data3 %>%
 My personal favorite part of this figure is the fact that it tells a good story. There are a lot properties I could choose to plot, but it is only interesting when there are contrasts. It is interesting (to me personally) to realize that since 2000, despite the fact that the songs are loud, high tempo, and energtic, they are only dropping in popularity. 
 
 
-# Attempt 1:
+# Attempt 1
 
 ```{r}
 
@@ -145,7 +146,7 @@ ggplot(fig2_data, aes(x=decades, y=property, fill=mean)) + geom_tile() +
 
 This is not bad, but also not great. I think the suggestion that I received the most is to rank the property based on the color, so I did that. However, I still feel because I calculated the mean of song's property, though I normalized scores, the range of each property is still very different, which makes the change within some properties impossible to see.
 
-# Attempt 2:
+# Attempt 2
 
 ```{r}
 ggplot(fig2_data2, aes(x=year, y=value)) + 

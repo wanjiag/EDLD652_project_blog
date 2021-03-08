@@ -11,6 +11,7 @@ categories:
   - spotify
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -33,8 +34,9 @@ purrr::map2(obs, files, ~{
 })
 ```
 
-# Data clearning:
-```{r}
+# Data Cleaning
+
+```{r Data Cleaning}
 data1 = data %>% 
   select(id, popularity, year, danceability, duration_ms, tempo, speechiness) %>% 
   mutate(popularity = (popularity-min(popularity))/(max(popularity)-min(popularity)),
@@ -66,7 +68,7 @@ fig1_data = data1 %>% select(-year) %>%
   
 ```
 
-# Final Visualization:
+# Final Visualization
 ```{r layout = "l-body-outset"}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.3) + 
@@ -82,7 +84,7 @@ ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) +
 
 I think I like this version the best because it not only shows the raw data, but also shows the trend. By separating each property into different panels, it makes it a lot easier to see that danceability have a almost linear relationship with popularity, whereas other properties all have a "sweet spot" for a song to be popular. 
 
-# Attempt 1:
+# Attempt 1
 ```{r}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.6) + 
@@ -92,7 +94,7 @@ ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) +
 
 Overall, the overlapping part in the figure makes it really hard to distinguish among each property. I also feel it is hard to see the trend because of how noisy the data is. 
 
-# Attempt 2:
+# Attempt 2
 ```{r}
 ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) + 
   geom_smooth(aes(color=property, fill=property))+

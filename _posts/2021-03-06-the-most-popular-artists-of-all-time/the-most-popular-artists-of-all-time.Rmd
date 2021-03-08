@@ -11,6 +11,7 @@ categories:
   - spotify
 output:
   distill::distill_article:
+    toc: true
     self_contained: false
 ---
 
@@ -33,9 +34,9 @@ purrr::map2(obs, files, ~{
 })
 ```
 
-
 # Data Cleaning
-```{r}
+
+```{r Data Cleaning}
 artist_data = data %>% 
   select(popularity, artists, year, name) %>% 
   mutate(artists =  gsub("\\[|\\]", "", artists)) %>% 
@@ -87,11 +88,15 @@ for (curr_year in sort(unique(artist_data_decades$year))){
   pre_df = curr_df
 }
 
+
+top10_df = top10_df %>% 
+  mutate(name = gsub("\\([^\\]]*\\)", "", name, perl=TRUE))
+
 ```
 
 # Final Visualization
 
-```{r}
+```{r layout = "l-body-outset"}
 p3 = ggplot(top10_df) +  
   aes(xmin = -10, 
       xmax = popularity,
@@ -101,7 +106,8 @@ p3 = ggplot(top10_df) +
       group = artists,
       fill = old) + 
   geom_text(aes(label = as.character(year)),
-            x = 60 , y = -2, alpha=0.8,
+            x = 100 , y = -2, alpha=0.8,
+            hjust = "right",  
             size = 40, col = "grey40") +
   geom_rect(alpha = .9) +
   scale_x_continuous(  

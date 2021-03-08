@@ -109,12 +109,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["The most popular artists of all time."]},{"type":"character","attributes":{},"value":["Looking at the most popular musical artists of all time based on their most popular song.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Wanjia Guo"]},{"type":"character","attributes":{},"value":["https://wanjiag.github.io/"]}]}]},{"type":"character","attributes":{},"value":["03-06-2021"]},{"type":"character","attributes":{},"value":["visualization","spotify"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","output"]}},"value":[{"type":"character","attributes":{},"value":["The most popular artists of all time."]},{"type":"character","attributes":{},"value":["Looking at the most popular musical artists of all time based on their most popular song.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Wanjia Guo"]},{"type":"character","attributes":{},"value":["https://wanjiag.github.io/"]}]}]},{"type":"character","attributes":{},"value":["03-06-2021"]},{"type":"character","attributes":{},"value":["visualization","spotify"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["the-most-popular-artists-of-all-time_files/anchor-4.2.2/anchor.min.js","the-most-popular-artists-of-all-time_files/bowser-1.9.3/bowser.min.js","the-most-popular-artists-of-all-time_files/distill-2.2.21/template.v2.js","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-2-1.gif","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-3-1.gif","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-4-1.gif","the-most-popular-artists-of-all-time_files/jquery-1.11.3/jquery.min.js","the-most-popular-artists-of-all-time_files/popper-2.6.0/popper.min.js","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy-light-border.css","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy.css","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy.umd.min.js","the-most-popular-artists-of-all-time_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["the-most-popular-artists-of-all-time_files/anchor-4.2.2/anchor.min.js","the-most-popular-artists-of-all-time_files/bowser-1.9.3/bowser.min.js","the-most-popular-artists-of-all-time_files/distill-2.2.21/template.v2.js","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-1-1.gif","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-2-1.gif","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-3-1.gif","the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-4-1.gif","the-most-popular-artists-of-all-time_files/jquery-1.11.3/jquery.min.js","the-most-popular-artists-of-all-time_files/popper-2.6.0/popper.min.js","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy-bundle.umd.min.js","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy-light-border.css","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy.css","the-most-popular-artists-of-all-time_files/tippy-6.2.7/tippy.umd.min.js","the-most-popular-artists-of-all-time_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1479,6 +1479,17 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#data-cleaning">Data Cleaning</a></li>
+<li><a href="#final-visualization">Final Visualization</a></li>
+<li><a href="#attempt-1">Attempt 1</a></li>
+<li><a href="#attempt-2">Attempt 2</a></li>
+</ul>
+</nav>
+</div>
 <h1 id="data-cleaning">Data Cleaning</h1>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1532,11 +1543,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='op'>}</span>
   <span class='va'>pre_df</span> <span class='op'>=</span> <span class='va'>curr_df</span>
 <span class='op'>}</span>
+
+
+<span class='va'>top10_df</span> <span class='op'>=</span> <span class='va'>top10_df</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>mutate</span><span class='op'>(</span>name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"\\([^\\]]*\\)"</span>, <span class='st'>""</span>, <span class='va'>name</span>, perl<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <h1 id="final-visualization">Final Visualization</h1>
-<div class="layout-chunk" data-layout="l-body">
+<div class="layout-chunk" data-layout="l-body-outset">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p3</span> <span class='op'>=</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>top10_df</span><span class='op'>)</span> <span class='op'>+</span>  
   <span class='fu'>aes</span><span class='op'>(</span>xmin <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span>, 
@@ -1547,7 +1562,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
       group <span class='op'>=</span> <span class='va'>artists</span>,
       fill <span class='op'>=</span> <span class='va'>old</span><span class='op'>)</span> <span class='op'>+</span> 
   <span class='fu'>geom_text</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span>label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>year</span><span class='op'>)</span><span class='op'>)</span>,
-            x <span class='op'>=</span> <span class='fl'>60</span> , y <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, alpha<span class='op'>=</span><span class='fl'>0.8</span>,
+            x <span class='op'>=</span> <span class='fl'>100</span> , y <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, alpha<span class='op'>=</span><span class='fl'>0.8</span>,
+            hjust <span class='op'>=</span> <span class='st'>"right"</span>,  
             size <span class='op'>=</span> <span class='fl'>40</span>, col <span class='op'>=</span> <span class='st'>"grey40"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_rect</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>.9</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>scale_x_continuous</span><span class='op'>(</span>  
@@ -1588,7 +1604,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
         renderer <span class='op'>=</span> <span class='fu'><a href='https://gganimate.com/reference/renderers.html'>magick_renderer</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-2-1.gif" /><!-- --></p>
+<p><img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-1-1.gif" /><!-- --></p>
 </div>
 <p>In general, I liked this version the best because 1) I finally figured out how to slow things down a bit; 2) adding colors makes it easier to detect changes from one decade to the next; 3) with new way of calculating running tops, the transitions are more meaningful and more interesting; 4) added the names of the popular songs for people who are interested,. Its easy to see that the only songs people still listening to from 1920s-1990s are almost exclusively christmas songs.</p>
 <h1 id="attempt-1">Attempt 1</h1>
@@ -1629,7 +1645,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
         renderer <span class='op'>=</span> <span class='fu'><a href='https://gganimate.com/reference/renderers.html'>magick_renderer</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-3-1.gif" /><!-- --></p>
+<p><img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-2-1.gif" /><!-- --></p>
 </div>
 <p>This is an edited version from the draft. One of the major problem I found after I planned to make this figure but had trouble with is the fact that very little people stay within top10 from one year to the next. Therefore, the transition state doesn’t look as nice as a continuous racing chart. The transition look far more sudden than I hoped.</p>
 <p>I also had some trouble with flash green screens with gganimate(). Luckily I was able to find a solution online via using the magick_renderer() function.</p>
@@ -1666,7 +1682,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
         renderer <span class='op'>=</span> <span class='fu'><a href='https://gganimate.com/reference/renderers.html'>magick_renderer</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
-<img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-4-1.gif" /><!-- -->
+<img src="the-most-popular-artists-of-all-time_files/figure-html5/unnamed-chunk-3-1.gif" /><!-- -->
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#anim_save("popular_artist.gif", animation = last_animation())</span>
 </code></pre>
