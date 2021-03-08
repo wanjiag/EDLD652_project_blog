@@ -121,13 +121,15 @@ ggplot(fig2_data3 %>%
   gghighlight(use_direct_label = FALSE)+
   scale_color_OkabeIto(darken=-0.5)+
   theme(plot.title = ggtext::element_markdown(),
-        legend.position = "none")+
+        legend.position = "none",
+        axis.title.x=element_blank())+
   labs(title = "Music is 
   <span style = 'color: #57B4E9'>louder</span> 
   <span style = 'color: #029E73'>higher tempo</span> 
   <span style = 'color: #E69F00'>more energetic</span>,\n
   but NOT
-  <span style = 'color: #FF2500'>**more popular**</span>")
+  <span style = 'color: #FF2500'>**more popular**</span>",
+  y = "Normalized Scores (0-1)")
 ```
 
 My personal favorite part of this figure is the fact that it tells a good story. There are a lot properties I could choose to plot, but it is only interesting when there are contrasts. It is interesting (to me personally) to realize that since 2000, despite the fact that the songs are loud, high tempo, and energtic, they are only dropping in popularity. 

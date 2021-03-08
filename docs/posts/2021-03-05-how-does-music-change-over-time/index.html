@@ -2558,13 +2558,15 @@ Project
   <span class='fu'><a href='https://rdrr.io/pkg/gghighlight/man/gghighlight.html'>gghighlight</a></span><span class='op'>(</span>use_direct_label <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'><a href='https://rdrr.io/pkg/colorblindr/man/scale_OkabeIto.html'>scale_color_OkabeIto</a></span><span class='op'>(</span>darken<span class='op'>=</span><span class='op'>-</span><span class='fl'>0.5</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'>theme</span><span class='op'>(</span>plot.title <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span>,
-        legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span><span class='op'>+</span>
+        legend.position <span class='op'>=</span> <span class='st'>"none"</span>,
+        axis.title.x<span class='op'>=</span><span class='fu'>element_blank</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span>
   <span class='fu'>labs</span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Music is 
   &lt;span style = 'color: #57B4E9'&gt;louder&lt;/span&gt; 
   &lt;span style = 'color: #029E73'&gt;higher tempo&lt;/span&gt; 
   &lt;span style = 'color: #E69F00'&gt;more energetic&lt;/span&gt;,\n
   but NOT
-  &lt;span style = 'color: #FF2500'&gt;**more popular**&lt;/span&gt;"</span><span class='op'>)</span>
+  &lt;span style = 'color: #FF2500'&gt;**more popular**&lt;/span&gt;"</span>,
+  y <span class='op'>=</span> <span class='st'>"Normalized Scores (0-1)"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="how-does-music-change-over-time_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
