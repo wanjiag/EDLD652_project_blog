@@ -74,6 +74,8 @@ ggplot(fig1_data, aes(x=value, y=popularity_median, group=property)) +
   geom_ribbon(aes(ymin = 0, ymax = popularity_median, fill=property), alpha=0.3) + 
   geom_smooth(aes(color=property, fill=property))+
   labs(x = "Normalized Value (0-100)", y = "Median Popularity (0-1)") + 
+  scale_y_continuous(  
+    limits = c(0, 0.5))+
   scale_fill_OkabeIto()+
   scale_color_OkabeIto(darken=-0.7)+
   facet_wrap(~property, nrow=1)+
